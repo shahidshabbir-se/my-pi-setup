@@ -191,14 +191,6 @@ cp -R ~/.pi/agent/extensions agent/extensions
 
 Do not commit auth files, sessions, caches, `.a5c/`, `node_modules`, or local databases.
 
-## Recommended GitHub topics
-
-If you fork or publish your own version, useful topics include:
-
-```text
-pi ai-coding coding-agent agents mcp developer-tools automation ai-workflow open-source
-```
-
 ## Contributing
 
 Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
