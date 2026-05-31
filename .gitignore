@@ -1,0 +1,32 @@
+# Secrets / auth
+.env
+.env.*
+auth.json
+**/auth.json
+**/*secret*
+**/*token*
+**/*credential*
+
+# Generated dependencies and package caches
+npm/
+**/npm/node_modules/
+**/npm/package-lock.json
+node_modules/
+
+# Pi/session/runtime state
+sessions/
+**/sessions/
+context-mode/
+memory/
+.a5c/
+backups/
+**/backups/
+.pi-lens/
+**/.pi-lens/
+
+# Logs, caches, and local generated state
+*.log
+*.jsonl
+mcp-cache.json
+**/mcp-cache.json
+**/logs/

@@ -1,0 +1,7 @@
+{
+  "tui.input.tab": [],
+  "app.thinking.cycle": ["alt+t"],
+  "app.model.select": ["alt+m"],
+  "app.model.cycleForward": ["alt+]"],
+  "app.model.cycleBackward": ["alt+["]
+}

@@ -1,0 +1,100 @@
+{
+  "$schema": "https://raw.githubusercontent.com/gotgenes/pi-permission-system/main/schemas/permissions.schema.json",
+  "debugLog": false,
+  "permissionReviewLog": true,
+  "yoloMode": false,
+  "piInfrastructureReadPaths": [
+    "~/.pi/agent/**",
+    "~/.cache/.bun/install/global/node_modules/@earendil-works/pi-coding-agent/**"
+  ],
+  "permission": {
+    "*": "ask",
+    "path": {
+      "*": "allow",
+      "*.env": "deny",
+      "*.env.*": "deny",
+      "*.env.example": "allow",
+      "**/.env": "deny",
+      "**/.env.*": "deny",
+      "**/.env.example": "allow",
+      "~/.ssh/*": "deny",
+      "~/.ssh/**": "deny",
+      "**/*secret*": "ask",
+      "**/*token*": "ask",
+      "**/*credential*": "ask"
+    },
+    "read": "allow",
+    "ls": "allow",
+    "find": "allow",
+    "grep": "allow",
+    "write": {
+      "*": "ask",
+      "*.env": "deny",
+      "*.env.*": "deny",
+      "*.env.example": "allow",
+      "**/.env": "deny",
+      "**/.env.*": "deny",
+      "**/.env.example": "allow"
+    },
+    "edit": {
+      "*": "ask",
+      "*.env": "deny",
+      "*.env.*": "deny",
+      "*.env.example": "allow",
+      "**/.env": "deny",
+      "**/.env.*": "deny",
+      "**/.env.example": "allow"
+    },
+    "bash": {
+      "*": "ask",
+      "pwd": "allow",
+      "whoami": "allow",
+      "git status*": "allow",
+      "git diff*": "allow",
+      "git log*": "allow",
+      "git show*": "allow",
+      "ls*": "allow",
+      "find *": "allow",
+      "grep *": "allow",
+      "rg *": "allow",
+      "npm test*": "allow",
+      "npm run test*": "allow",
+      "npm run lint*": "allow",
+      "npm run build*": "allow",
+      "bun test*": "allow",
+      "bun run test*": "allow",
+      "bun run lint*": "allow",
+      "bun run build*": "allow",
+      "rm -rf *": "deny",
+      "rm -fr *": "deny",
+      "sudo *": "ask",
+      "git push*": "deny",
+      "git reset --hard*": "ask",
+      "git clean*": "ask",
+      "npm install -g*": "ask",
+      "npm uninstall -g*": "ask",
+      "pi install*": "ask",
+      "pi remove*": "ask",
+      "pi update*": "ask"
+    },
+    "mcp": {
+      "*": "ask",
+      "mcp_status": "allow",
+      "mcp_list": "allow"
+    },
+    "skill": {
+      "*": "ask",
+      "diagnose": "allow",
+      "testing": "allow",
+      "typescript": "allow",
+      "verification-loop": "allow",
+      "pi-subagents": "allow"
+    },
+    "todo": "allow",
+    "external_directory": {
+      "*": "ask",
+      "~/.pi/agent/**": "allow",
+      "~/.cache/.bun/install/global/node_modules/@earendil-works/pi-coding-agent/**": "allow"
+    }
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "lastChangelogVersion": "0.78.0",
+  "packages": [
+    "npm:@wierdbytes/pi-tokyo-night",
+    "npm:@offbynan/pi-cursor-provider",
+    "npm:pi-subagents",
+    "npm:@juicesharp/rpiv-ask-user-question",
+    "npm:pi-lens",
+    "npm:@juicesharp/rpiv-todo",
+    "npm:pi-agent-browser-native",
+    "npm:@aliou/pi-processes",
+    "npm:pi-mcp-adapter",
+    "npm:@juicesharp/rpiv-btw",
+    "npm:@samfp/pi-memory",
+    "npm:context-mode",
+    "npm:pi-workspace-history",
+    "npm:pi-scroll",
+    "npm:@pi-unipi/notify",
+    "npm:@a5c-ai/babysitter-pi",
+    "npm:@gotgenes/pi-permission-system"
+  ],
+  "workspaceHistory": {
+    "storageDir": "~/.pi_history",
+    "maxSessionsPerWorkspace": 3,
+    "maxWorkspaces": 10,
+    "enabled": true
+  },
+  "images": {
+    "blockImages": false
+  },
+  "showHardwareCursor": false,
+  "terminal": {
+    "showTerminalProgress": true
+  },
+  "enableInstallTelemetry": false,
+  "doubleEscapeAction": "tree",
+  "defaultProvider": "openai-codex",
+  "defaultModel": "gpt-5.5",
+  "theme": "tokyo-night",
+  "defaultThinkingLevel": "medium",
+  "defaultAgent": "build",
+  "statusLine": {
+    "type": "command",
+    "command": "npx -y @owloops/claude-powerline@latest"
+  },
+  "editorPaddingX": 1,
+  "steeringMode": "one-at-a-time",
+  "followUpMode": "one-at-a-time",
+  "transport": "auto",
+  "collapseChangelog": true,
+  "quietStartup": true,
+  "hideThinkingBlock": true
+}
