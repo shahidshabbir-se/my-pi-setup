@@ -1,8 +1,24 @@
 # Pi Setup
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Pi setup](https://img.shields.io/badge/Pi-Coding%20Agent-blueviolet)](https://github.com/earendil-works/pi)
+[![Safety defaults](https://img.shields.io/badge/safety-YOLO%20off-success)](agent/extensions/pi-permission-system/config.json)
+
 A public, reproducible Pi Coding Agent setup with curated agents, skills, MCP servers, safety defaults, and workflow extensions.
 
 This repo is meant to be copied or adapted as a starting point for a productive Pi environment. It tracks configuration only — not secrets, auth state, package caches, sessions, or local runtime data.
+
+## Why use this?
+
+Setting up an AI coding environment gets messy fast: agents, skills, browser tooling, MCP servers, memory, permissions, and orchestration all need to fit together. This repo gives you a working baseline you can inspect, fork, and adapt instead of starting from a blank config.
+
+Good fit if you want:
+
+- a batteries-included Pi setup
+- curated specialist agents and skills
+- MCP-ready docs/reasoning tools
+- conservative safety defaults
+- a public template for your own AI coding workflow
 
 ## What this includes
 
@@ -174,6 +190,22 @@ cp -R ~/.pi/agent/extensions agent/extensions
 ```
 
 Do not commit auth files, sessions, caches, `.a5c/`, `node_modules`, or local databases.
+
+## Recommended GitHub topics
+
+If you fork or publish your own version, useful topics include:
+
+```text
+pi ai-coding coding-agent agents mcp developer-tools automation ai-workflow open-source
+```
+
+## Contributing
+
+Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md).
 
 ## License
 
