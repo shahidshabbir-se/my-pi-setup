@@ -26,7 +26,7 @@ Good fit if you want:
 - **Agents** — four subagent definitions covering planning, codebase exploration, general autonomous work, and time-sensitive research.
 - **Skills** — six task-scoped instruction sets (see below).
 - **Extensions** — seven TypeScript extensions that add tools and UI to Pi.
-- **Config** — `settings.json`, `keybindings.json`, `mcp.json`, `tasks-config.json`, `prompt-improve.json`, `pi-input.json`, and skill-gate configuration.
+- **Config** — `settings.json`, `keybindings.json`, `mcp.json`, `tasks-config.json`, `prompt-improve.json`, and `pi-input.json`.
 
 ## Agents
 
@@ -72,9 +72,6 @@ agent/
   tasks-config.json                      # Task-list glyphs
   pi-input.json                          # pi-input extension config
   prompt-improve.json                    # Prompt-improvement extension config
-  config/
-    skill-gate.json                      # Per-skill enable/disable
-    skill-gate-analytics.json            # Skill usage analytics
   agents/                                # Subagent definitions
   skills/                                # Skill definitions
   extensions/                            # TypeScript extensions
@@ -86,6 +83,7 @@ The following are intentionally ignored and should not be committed:
 
 - `.env*`, auth files, secrets, tokens, credentials
 - `agent/trust.json` and `agent/models.json` — machine-local; they contain absolute home paths and private project locations
+- `agent/config/` — machine-local skill-gate state: per-skill toggles, usage counters, and a project map that fills with private paths
 - Pi sessions, runtime state, and `.pi/` task state
 - installed packages, `agent/git/`, `agent/npm/`, and `node_modules/`
 - logs, caches, checkpoints, and model/provider caches
@@ -125,7 +123,6 @@ cp agent/APPEND_SYSTEM.md       ~/.pi/agent/APPEND_SYSTEM.md
 cp -R agent/agents    ~/.pi/agent/agents
 cp -R agent/skills    ~/.pi/agent/skills
 cp -R agent/extensions ~/.pi/agent/extensions
-cp -R agent/config    ~/.pi/agent/config
 ```
 
 Install the packages declared in `agent/settings.json` using Pi's package manager, then restart Pi. Review the package list before installing — it includes themes, subagents, LSP tooling, browser automation, MCP, and context tools.
@@ -137,7 +134,6 @@ Install the packages declared in `agent/settings.json` using Pi's package manage
 - `agent/agents/` and `agent/skills/` — add or edit agent and skill definitions.
 - `agent/extensions/` — add or edit extensions.
 - `agent/mcp.json` — MCP servers; empty by default, add your own.
-- `agent/config/skill-gate.json` — enable or disable individual skills.
 
 ## Publishing changes from your local Pi config
 

@@ -53,6 +53,9 @@ agent/models.json
 /agent/workflows/
 /agent/pi-acp/
 /agent/.pi/
+# Skill-gate state is machine-local: per-skill toggles, usage counters,
+# and a project map that fills up with private paths.
+/agent/config/
 /agent/extensions/logs/
 /agent/extensions/history-shortcut-hint-shown
 /agent/extensions/subagent.json
