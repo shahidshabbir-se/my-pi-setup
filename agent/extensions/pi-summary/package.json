@@ -1,0 +1,12 @@
+{
+  "name": "summaries",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "effect": "^4.0.0-beta.99"
+  },
+  "devDependencies": {
+    "@effect/tsgo": "^0.24.2",
+    "typescript": "^7.0.2"
+  }
+}

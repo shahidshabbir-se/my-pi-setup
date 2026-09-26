@@ -1,0 +1,30 @@
+{
+  "name": "pi-session-rename",
+  "version": "0.1.4",
+  "description": "Automatically names pi sessions with AI, with configurable naming model",
+  "type": "module",
+  "keywords": [
+    "pi-package",
+    "pi",
+    "pi-coding-agent",
+    "extension",
+    "session"
+  ],
+  "license": "MIT",
+  "files": [
+    "index.ts",
+    "utils.ts",
+    "README.md",
+    "LICENSE"
+  ],
+  "pi": {
+    "extensions": [
+      "./index.ts"
+    ]
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": "*",
+    "@earendil-works/pi-ai": "*",
+    "@earendil-works/pi-tui": "*"
+  }
+}

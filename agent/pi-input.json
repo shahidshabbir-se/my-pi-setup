@@ -1,0 +1,12 @@
+{
+  "spinnerSpeed": 120,
+  "separator": " - ",
+  "borderSeparator": " - ",
+  "topLeft": [],
+  "topRight": [],
+  "bottomLeft": [],
+  "bottomRight": [
+    "sessionName",
+    "extensionStatuses"
+  ]
+}

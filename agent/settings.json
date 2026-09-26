@@ -1,53 +1,64 @@
 {
-  "lastChangelogVersion": "0.78.0",
+  "lastChangelogVersion": "0.87.1",
+  "theme": "tokyo-night",
   "packages": [
     "npm:@wierdbytes/pi-tokyo-night",
-    "npm:@offbynan/pi-cursor-provider",
-    "npm:pi-subagents",
+    "npm:pi-commandcode-provider",
+    "npm:pi-list-tools",
+    "npm:@ayulab/pi-rewind",
+    {
+      "source": "git:github.com/mattpocock/skills",
+      "skills": [
+        "skills/engineering/**",
+        "skills/productivity/**"
+      ]
+    },
+    {
+      "source": "git:github.com/humanlayer/skills",
+      "skills": [
+        "plugins/show-me/skills/show-me"
+      ]
+    },
+    {
+      "source": "git:github.com/backnotprop/pstack",
+      "skills": [
+        "!skills/tdd",
+        "!skills/teach"
+      ]
+    },
+    "npm:pi-web-access",
+    "npm:@tintinweb/pi-subagents",
     "npm:@juicesharp/rpiv-ask-user-question",
     "npm:pi-lens",
-    "npm:@juicesharp/rpiv-todo",
-    "npm:pi-agent-browser-native",
-    "npm:@aliou/pi-processes",
+    "npm:@pi-kaush/pi-inline-skill-identifier",
+    "npm:tgrep-pi",
     "npm:pi-mcp-adapter",
-    "npm:@juicesharp/rpiv-btw",
-    "npm:@samfp/pi-memory",
-    "npm:context-mode",
+    "npm:pi-startup-header",
+    "npm:pi-prompt-improve",
+    "npm:pi-free",
+    "npm:@narumitw/pi-btw",
+    "npm:pi-antigravity",
+    "npm:pi-context-view",
     "npm:pi-workspace-history",
-    "npm:pi-scroll",
-    "npm:@pi-unipi/notify",
-    "npm:@a5c-ai/babysitter-pi",
-    "npm:@gotgenes/pi-permission-system"
+    "npm:pi-list-skills"
   ],
-  "workspaceHistory": {
-    "storageDir": "~/.pi_history",
-    "maxSessionsPerWorkspace": 3,
-    "maxWorkspaces": 10,
-    "enabled": true
-  },
-  "images": {
-    "blockImages": false
-  },
-  "showHardwareCursor": false,
-  "terminal": {
-    "showTerminalProgress": true
-  },
-  "enableInstallTelemetry": false,
+  "skills": [],
+  "tuiMode": "fullscreen",
+  "clearOnStart": true,
   "doubleEscapeAction": "tree",
-  "defaultProvider": "openai-codex",
-  "defaultModel": "gpt-5.5",
-  "theme": "tokyo-night",
-  "defaultThinkingLevel": "medium",
-  "defaultAgent": "build",
-  "statusLine": {
-    "type": "command",
-    "command": "npx -y @owloops/claude-powerline@latest"
-  },
-  "editorPaddingX": 1,
-  "steeringMode": "one-at-a-time",
-  "followUpMode": "one-at-a-time",
-  "transport": "auto",
   "collapseChangelog": true,
   "quietStartup": true,
-  "hideThinkingBlock": true
+  "enableInstallTelemetry": false,
+  "hideThinkingBlock": false,
+  "defaultProvider": "cline",
+  "defaultModel": "stealth/space-bunny-alpha",
+  "markdown": {
+    "mermaid": "streaming"
+  },
+  "workspaceHistory": {
+    "enabled": true,
+    "storageDir": "~/.local/share/pi-history",
+    "maxSessionsPerWorkspace": 5,
+    "maxWorkspaces": 15
+  }
 }

@@ -1,7 +1,8 @@
 {
-  "tui.input.tab": [],
-  "app.thinking.cycle": ["alt+t"],
-  "app.model.select": ["alt+m"],
-  "app.model.cycleForward": ["alt+]"],
-  "app.model.cycleBackward": ["alt+["]
+  "app.thinking.cycle": "ctrl+t",
+  "app.thinking.toggle": [
+    "alt+t"
+  ],
+  "app.model.select": "alt+m",
+  "app.models.save": "ctrl+s"
 }

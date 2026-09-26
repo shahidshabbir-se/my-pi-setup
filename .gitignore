@@ -30,3 +30,47 @@ backups/
 mcp-cache.json
 **/mcp-cache.json
 **/logs/
+
+# Machine-local identity: absolute home paths / private project locations
+agent/trust.json
+agent/models.json
+
+# Local task/session state written by the agent at runtime
+/.pi/
+
+# Locally installed packages, agents, prompts and skills (synced by pi, not source)
+/agent/git/
+/agent/npm/
+/agent/ayu/
+/agent/cache/
+/agent/fff/
+/fff/
+/agent/tmp/
+/agent/state/
+/agent/checkpoints/
+/agent/missions/
+/agent/plans/
+/agent/workflows/
+/agent/pi-acp/
+/agent/.pi/
+/agent/extensions/logs/
+/agent/extensions/history-shortcut-hint-shown
+/agent/extensions/subagent.json
+/agent/extensions/history.jsonl
+
+# Local model/provider cache
+models-store.json
+antigravity-model-catalog.json
+antigravity-accounts.json
+commandcode-models.json
+cliproxyapi-models.json
+9router-config.json
+mcp-onboarding.json
+mcp-npx-cache.json
+free.json
+free.json.bak*
+free.log
+free-telemetry.json
+acp.log
+run-history.jsonl
+.billion-context-pi-update-*
