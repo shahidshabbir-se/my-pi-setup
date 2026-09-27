@@ -8,23 +8,15 @@
     "npm:@ayulab/pi-rewind",
     {
       "source": "git:github.com/mattpocock/skills",
-      "skills": [
-        "skills/engineering/**",
-        "skills/productivity/**"
-      ]
+      "skills": ["skills/engineering/**", "skills/productivity/**"]
     },
     {
       "source": "git:github.com/humanlayer/skills",
-      "skills": [
-        "plugins/show-me/skills/show-me"
-      ]
+      "skills": ["plugins/show-me/skills/show-me"]
     },
     {
       "source": "git:github.com/backnotprop/pstack",
-      "skills": [
-        "!skills/tdd",
-        "!skills/teach"
-      ]
+      "skills": ["!skills/tdd", "!skills/teach"]
     },
     "npm:pi-web-access",
     "npm:@tintinweb/pi-subagents",
