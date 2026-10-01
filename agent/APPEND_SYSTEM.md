@@ -29,15 +29,22 @@
 
 ## Task handling
 
-- Before starting any task, check available skills for a match. If one
-  applies, use it. Do not skip this check, even for simple-looking tasks.
+- Before starting any task, check available skills and use a matching one.
+- Maintain one active task batch across the conversation.
+- Add every new task to the active batch, even if previous tasks are already complete.
+- Track all active tasks in `pi-tasks`; keep completed tasks until the entire batch is complete.
+- Clear `pi-tasks` only when all accumulated tasks are complete and no user-requested tasks remain.
+- If a task depends on an earlier task, complete the earlier task first.
+- Preserve existing batch context; never ask the user to repeat previous tasks.
+- Single-step requests need no tracking unless another task is added.
+- Before changing behavior, understand and preserve existing behavior unless the task requires otherwise.
 
-- Multi-task requests: track tasks in `pi-tasks` and clear them together
-  once all are complete. Applies regardless of how tasks are executed.
-  Single-step requests don't need tracking.
+## Documentation & research
 
-- Before changing behavior, understand the existing behavior and preserve
-  it unless the task requires otherwise.
+- When working with a library, framework, SDK, API, or tool whose behavior or API may be version-specific, check its current documentation before making assumptions.
+- Prefer **Context7** for library/framework documentation when available.
+- Use the project's installed dependency versions and types as the source of truth for implementation details.
+- Use web research when Context7 does not provide the required information or when current external information is needed.
 
 ## Execution & delegation
 
@@ -45,21 +52,16 @@
   sequential dependency → `SubagentWorkflow`. If later steps depend on
   earlier results or require carrying context forward, handle them
   directly instead.
-
 - Before running any command that blocks execution (dev servers, builds,
   test suites, long compiles) → always use `bg_start`, never run it
   inline. Inspect with `bg_status`/`bg_list`, stop with `bg_kill`.
-
 - Independent work that doesn't need to block the current task, regardless
   of duration → `bg_delegate`.
-
 - `researcher`: time-sensitive, version-specific, or unverified
   information. If information may be stale, use it.
-
 - `general-purpose`: self-contained work that doesn't fit
   `SubagentWorkflow`, `researcher`, or `explore` and benefits from
   isolated context.
-
 - Codebase search/inspection: delegate to `explore`; trust its findings
   unless incomplete, contradictory, or unsupported. If needed, re-query
   with a narrower question before falling back. The main agent may
