@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.87.1",
+  "lastChangelogVersion": "0.99.2",
   "theme": "tokyo-night",
   "packages": [
     "npm:@wierdbytes/pi-tokyo-night",
@@ -8,15 +8,29 @@
     "npm:@ayulab/pi-rewind",
     {
       "source": "git:github.com/mattpocock/skills",
-      "skills": ["skills/engineering/**", "skills/productivity/**"]
+      "skills": [
+        "skills/engineering/**",
+        "skills/productivity/**"
+      ]
     },
     {
       "source": "git:github.com/humanlayer/skills",
-      "skills": ["plugins/show-me/skills/show-me"]
+      "skills": [
+        "plugins/show-me/skills/show-me"
+      ]
+    },
+    {
+      "source": "git:github.com/emilkowalski/skills",
+      "skills": [
+        "!skills/prototype"
+      ]
     },
     {
       "source": "git:github.com/backnotprop/pstack",
-      "skills": ["!skills/tdd", "!skills/teach"]
+      "skills": [
+        "!skills/tdd",
+        "!skills/teach"
+      ]
     },
     "npm:pi-web-access",
     "npm:@tintinweb/pi-subagents",
@@ -24,7 +38,6 @@
     "npm:pi-lens",
     "npm:@pi-kaush/pi-inline-skill-identifier",
     "npm:tgrep-pi",
-    "npm:pi-mcp-adapter",
     "npm:pi-startup-header",
     "npm:pi-prompt-improve",
     "npm:pi-free",
@@ -32,7 +45,10 @@
     "npm:pi-antigravity",
     "npm:pi-context-view",
     "npm:pi-workspace-history",
-    "npm:pi-list-skills"
+    "npm:@tintinweb/pi-tasks",
+    "npm:@plannotator/pi-extension",
+    "npm:pi-auto-reviewer",
+    "npm:pi-tool-display"
   ],
   "skills": [],
   "tuiMode": "fullscreen",
@@ -44,6 +60,9 @@
   "hideThinkingBlock": false,
   "defaultProvider": "cline",
   "defaultModel": "stealth/space-bunny-alpha",
+  "defaultTools": [
+    "+codemode"
+  ],
   "markdown": {
     "mermaid": "streaming"
   },
@@ -52,5 +71,11 @@
     "storageDir": "~/.local/share/pi-history",
     "maxSessionsPerWorkspace": 5,
     "maxWorkspaces": 15
+  },
+  "enableSkillCommands": false,
+  "autoReviewer": {
+    "backend": "jev",
+    "provider": "typesafe",
+    "model": "jev-latest"
   }
 }
