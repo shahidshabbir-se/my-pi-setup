@@ -77,3 +77,6 @@ free-telemetry.json
 acp.log
 run-history.jsonl
 .billion-context-pi-update-*
+free.log.*
+mcp-auth.json
+mcp-project-approvals.json
