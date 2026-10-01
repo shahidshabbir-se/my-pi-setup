@@ -2,7 +2,7 @@
 name: Explore
 alias: explore
 description: Fast, read-only codebase exploration specialist. Thoroughly search and analyze files to locate relevant implementations, patterns, and dependencies, then report concise findings without modifying anything.
-model: google/gemini-3.1-flash-lite
+model: antigravity/gemini-3.1-flash-lite
 thinking: low
 tools: read, grep, find, ls, bash
 systemPrompt: replace

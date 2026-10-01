@@ -3,7 +3,7 @@ name: web-researcher
 description:
 tools: web_search, fetch_content, get_search_content, source_check
 systemPromptMode: replace
-model: google/gemini-3.1-flash-lite
+model: antigravity/gemini-3.1-flash-lite
 thinking: low
 inheritSkills: true
 ---
