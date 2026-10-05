@@ -37,6 +37,7 @@ agent/models.json
 
 # Local task/session state written by the agent at runtime
 /.pi/
+*todo-state.json
 
 # Locally installed packages, agents, prompts and skills (synced by pi, not source)
 /agent/git/

@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "1.0.2",
+  "lastChangelogVersion": "1.0.3",
   "theme": "tokyo-night",
   "packages": [
     "npm:@wierdbytes/pi-tokyo-night",
@@ -14,13 +14,13 @@
       ]
     },
     {
-      "source": "git:github.com/humanlayer/skills"
-    },
-    {
       "source": "git:github.com/emilkowalski/skills",
       "skills": [
         "!skills/prototype"
       ]
+    },
+    {
+      "source": "git:github.com/humanlayer/skills"
     },
     {
       "source": "git:github.com/backnotprop/pstack",
@@ -41,9 +41,9 @@
     "npm:pi-antigravity",
     "npm:pi-context-view",
     "npm:pi-workspace-history",
-    "npm:@tintinweb/pi-tasks",
     "npm:pi-tool-display",
-    "npm:pi-auto-reviewer"
+    "npm:pi-auto-reviewer",
+    "npm:@tintinweb/pi-tasks"
   ],
   "skills": [
     "git/github.com/humanlayer/skills/plugins/show-me/skills",
@@ -59,7 +59,7 @@
   "collapseChangelog": true,
   "quietStartup": "header",
   "enableInstallTelemetry": false,
-  "hideThinkingBlock": false,
+  "hideThinkingBlock": true,
   "defaultProvider": "cline",
   "defaultModel": "stealth/space-bunny-alpha",
   "defaultTools": [

@@ -249,6 +249,10 @@ function collectStats(ctx: ExtensionContext): Totals {
 	return totals;
 }
 
+function stripNewlines(text: string): string {
+	return text.replace(/[\r\n\t]+/g, " ");
+}
+
 function fitBorder(
 	left: string,
 	right: string,
@@ -259,18 +263,8 @@ function fitBorder(
 	const color = borderColor ?? ((s: string) => s);
 	if (width === 1) return color("─");
 
-	let leftText = left;
-	let rightText = right;
-	while (
-		2 + visibleWidth(leftText) + visibleWidth(rightText) + 3 > width &&
-		visibleWidth(rightText) > 0
-	) {
-		rightText = truncateToWidth(
-			rightText,
-			Math.max(0, visibleWidth(rightText) - 1),
-			"",
-		);
-	}
+	let leftText = stripNewlines(left);
+	let rightText = stripNewlines(right);
 	while (
 		2 + visibleWidth(leftText) + visibleWidth(rightText) + 3 > width &&
 		visibleWidth(leftText) > 0
@@ -278,6 +272,16 @@ function fitBorder(
 		leftText = truncateToWidth(
 			leftText,
 			Math.max(0, visibleWidth(leftText) - 1),
+			"",
+		);
+	}
+	while (
+		2 + visibleWidth(leftText) + visibleWidth(rightText) + 3 > width &&
+		visibleWidth(rightText) > 0
+	) {
+		rightText = truncateToWidth(
+			rightText,
+			Math.max(0, visibleWidth(rightText) - 1),
 			"",
 		);
 	}
@@ -313,6 +317,14 @@ class CompactEditor extends CustomEditor {
 		super(tui, theme, keybindings);
 	}
 
+	requestRender(): void {
+		this.tui.requestRender();
+	}
+
+	dispose(): void {
+		this.stopWorking();
+	}
+
 	getIsWorking(): boolean {
 		return this.isWorking;
 	}
@@ -341,7 +353,10 @@ class CompactEditor extends CustomEditor {
 
 	startWorking(message?: string) {
 		const fixed = message !== undefined;
-		const next = message ?? pickVerb();
+		const next =
+			message !== undefined
+				? truncateToWidth(sanitize(stripAnsi(message)), 45, "…")
+				: pickVerb();
 		if (this.isWorking && fixed && this.verb === next && !this.rotateVerbs) {
 			return;
 		}
@@ -443,11 +458,13 @@ class CompactEditor extends CustomEditor {
 		);
 		const topRight = topRightParts.join(sep);
 
-		lines[0] = fitBorder(
-			topLeft ? ` ${topLeft} ` : "",
-			topRight ? ` ${topRight} ` : "",
-			width,
-			borderFn,
+		lines[0] = stripNewlines(
+			fitBorder(
+				topLeft ? ` ${topLeft} ` : "",
+				topRight ? ` ${topRight} ` : "",
+				width,
+				borderFn,
+			),
 		);
 
 		// Editor layout is: top border, visible input lines, bottom border,
@@ -469,6 +486,8 @@ class CompactEditor extends CustomEditor {
 }
 
 class CompactFooter implements Component {
+	private disposeCallback?: () => void;
+
 	constructor(
 		private config: InputConfig,
 		private getBuiltStatuses: () => Record<string, string>,
@@ -476,8 +495,14 @@ class CompactFooter implements Component {
 		private onStatuses?: (statuses: ReadonlyMap<string, string>) => void,
 	) {}
 
+	setDisposeCallback(fn: () => void): void {
+		this.disposeCallback = fn;
+	}
+
 	invalidate(): void {}
-	dispose(): void {}
+	dispose(): void {
+		this.disposeCallback?.();
+	}
 
 	render(width: number): string[] {
 		const statuses = this.footerData.getExtensionStatuses();
@@ -548,9 +573,7 @@ export default function (pi: ExtensionAPI) {
 
 	const refresh = () => {
 		try {
-			(
-				editor as { tui?: { requestRender: () => void } } | undefined
-			)?.tui?.requestRender();
+			editor?.requestRender();
 		} catch {
 			/* ignore */
 		}
@@ -646,6 +669,14 @@ export default function (pi: ExtensionAPI) {
 	pi.on("session_start", (_event, ctx) => {
 		if (!ctx.hasUI) return;
 
+		// Clean up previous editor if still running from earlier session
+		editor?.stopWorking();
+		editor?.dispose();
+		editor = undefined;
+		phase = "idle";
+		showingReview = false;
+		latestFooterData = undefined;
+
 		// Hide open-agents banner if present
 		const ui = ctx.ui as {
 			setWidget: (
@@ -654,15 +685,24 @@ export default function (pi: ExtensionAPI) {
 				opts?: unknown,
 			) => void;
 		};
-		const origSetWidget = ui.setWidget.bind(ui);
-		ui.setWidget = (key, content, opts) => {
-			if (key === "open-agents-banner") {
-				origSetWidget(key, undefined, opts);
-				queueMicrotask(refresh);
-				return;
-			}
-			origSetWidget(key, content, opts);
-		};
+		if (!("__piInputPatched" in ui)) {
+			const origSetWidget = ui.setWidget.bind(ui);
+			const patchedSetWidget = (
+				key: string,
+				content: string[] | undefined | ((tui: TUI, theme: unknown) => unknown),
+				opts?: unknown,
+			) => {
+				if (key === "open-agents-banner") {
+					origSetWidget(key, undefined, opts);
+					queueMicrotask(refresh);
+					return;
+				}
+				origSetWidget(key, content, opts);
+			};
+			// SAFETY: Tag the wrapper function so we don't wrap setWidget multiple times across resumes
+			Object.assign(patchedSetWidget, { __piInputPatched: true });
+			ui.setWidget = patchedSetWidget;
+		}
 
 		const config = loadConfig();
 		ctx.ui.setWorkingVisible(false);
@@ -686,6 +726,8 @@ export default function (pi: ExtensionAPI) {
 
 		// pi-rewind loads after us and wraps getEditorComponent() — good.
 		ctx.ui.setEditorComponent((tui, theme, keybindings) => {
+			editor?.stopWorking();
+			editor?.dispose();
 			editor = new CompactEditor(
 				tui,
 				theme,
@@ -710,7 +752,12 @@ export default function (pi: ExtensionAPI) {
 						const reviewing = statuses.get("auto-reviewer");
 						if (reviewing) {
 							showingReview = true;
-							editor?.startWorking(stripAnsi(reviewing) || "Reviewing…");
+							const cleanReviewing = truncateToWidth(
+								sanitize(stripAnsi(reviewing)),
+								40,
+								"…",
+							);
+							editor?.startWorking(cleanReviewing || "Reviewing…");
 							return;
 						}
 						if (showingReview) {
@@ -727,7 +774,7 @@ export default function (pi: ExtensionAPI) {
 						}
 					},
 				);
-				footer.dispose = unsub;
+				footer.setDisposeCallback(unsub);
 				return footer;
 			},
 		);
@@ -749,7 +796,10 @@ export default function (pi: ExtensionAPI) {
 
 	pi.on("session_shutdown", (_event, ctx) => {
 		phase = "idle";
+		showingReview = false;
+		latestFooterData = undefined;
 		editor?.stopWorking();
+		editor?.dispose();
 		editor = undefined;
 		if (!ctx.hasUI) return;
 		ctx.ui.setFooter(undefined);
