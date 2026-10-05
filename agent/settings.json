@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.99.2",
+  "lastChangelogVersion": "1.0.2",
   "theme": "tokyo-night",
   "packages": [
     "npm:@wierdbytes/pi-tokyo-night",
@@ -14,10 +14,7 @@
       ]
     },
     {
-      "source": "git:github.com/humanlayer/skills",
-      "skills": [
-        "plugins/show-me/skills/show-me"
-      ]
+      "source": "git:github.com/humanlayer/skills"
     },
     {
       "source": "git:github.com/emilkowalski/skills",
@@ -38,7 +35,6 @@
     "npm:pi-lens",
     "npm:@pi-kaush/pi-inline-skill-identifier",
     "npm:tgrep-pi",
-    "npm:pi-startup-header",
     "npm:pi-prompt-improve",
     "npm:pi-free",
     "npm:@narumitw/pi-btw",
@@ -46,16 +42,22 @@
     "npm:pi-context-view",
     "npm:pi-workspace-history",
     "npm:@tintinweb/pi-tasks",
-    "npm:@plannotator/pi-extension",
-    "npm:pi-auto-reviewer",
-    "npm:pi-tool-display"
+    "npm:pi-tool-display",
+    "npm:pi-auto-reviewer"
   ],
-  "skills": [],
+  "skills": [
+    "git/github.com/humanlayer/skills/plugins/show-me/skills",
+    "git/github.com/humanlayer/skills/plugins/visual-pr/skills",
+    "git/github.com/humanlayer/skills/plugins/improve-claude-md/skills",
+    "git/github.com/humanlayer/skills/plugins/narrow-react-prop-types/skills",
+    "git/github.com/humanlayer/skills/plugins/build-iterated-agentic-loop/skills",
+    "git/github.com/humanlayer/skills/plugins/design-control-loop/skills"
+  ],
   "tuiMode": "fullscreen",
   "clearOnStart": true,
   "doubleEscapeAction": "tree",
   "collapseChangelog": true,
-  "quietStartup": true,
+  "quietStartup": "header",
   "enableInstallTelemetry": false,
   "hideThinkingBlock": false,
   "defaultProvider": "cline",
@@ -77,5 +79,6 @@
     "backend": "jev",
     "provider": "typesafe",
     "model": "jev-latest"
-  }
+  },
+  "deviceId": "65989575-e276-4b31-bbf9-e1153e76b254"
 }
