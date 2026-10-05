@@ -1,0 +1,8 @@
+{
+  "name": "normalize-skills",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Automatically normalizes skill names in installed packages to spec-compliant kebab-case",
+  "main": "index.ts",
+  "private": true
+}
