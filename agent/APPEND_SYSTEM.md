@@ -41,10 +41,20 @@
 
 ## Documentation & research
 
-- When working with a library, framework, SDK, API, or tool whose behavior or API may be version-specific, check its current documentation before making assumptions.
-- Prefer **Context7** for library/framework documentation when available.
-- Use the project's installed dependency versions and types as the source of truth for implementation details.
-- Use web research when Context7 does not provide the required information or when current external information is needed.
+- For library, framework, SDK, API, CLI, or cloud-service usage, read
+  `context7-docs` and use **Context7** before making API or configuration
+  assumptions, including setup, debugging, and version migrations.
+- Use `resolve-library-id` to select the library, then `query-docs` with
+  the returned ID. Skip resolution only when the user explicitly supplies
+  a Context7 ID (`/org/project` or `/org/project/version`). Follow the
+  skill's lookup procedure, call limits, and privacy requirements.
+- In Code Mode, these tools are `tools.resolve_library_id(...)` and
+  `tools.query_docs(...)`; use the exposed tool schemas for arguments.
+- Use the project's installed dependency versions and types as the source
+  of truth for implementation details; match documentation to that version.
+- If Context7 is unavailable or lacks the required library/version/topic,
+  use primary-source web documentation and state the coverage limitation.
+  Use web research for current external information beyond library docs.
 
 ## Tool execution
 
@@ -105,6 +115,10 @@
   It returns sourced findings; the main agent writes any requested report.
 - `general-purpose`: self-contained implementation or investigation that
   benefits from isolated context.
+- `code-reviewer`: diff, PR, or branch reviews against documented
+  standards and specs via the `code-review` skill. Automatically trigger
+  after completing non-trivial code changes or feature implementations
+  before marking the task complete, or whenever reviewing a branch/PR.
 - Use `Explore` before searching when the relevant file, module, package
   configuration location, or implementation path is unknown. An explicit
   request to use it takes priority over doing preliminary searches yourself.
