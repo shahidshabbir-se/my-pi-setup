@@ -1,5 +1,5 @@
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
-import subagents from "../npm/node_modules/@tintinweb/pi-subagents/src/index.ts";
+import subagents from "../npm/node_modules/@tintinweb/pi-subagents/dist/index.js";
 
 // Keep the upstream runtime; adapt only its workflow selection policy to the
 // user's explicit approval of automatic delegation. Do not patch npm files.
