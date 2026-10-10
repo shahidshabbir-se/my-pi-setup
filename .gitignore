@@ -81,3 +81,6 @@ run-history.jsonl
 free.log.*
 mcp-auth.json
 mcp-project-approvals.json
+bin/
+install/
+themes/

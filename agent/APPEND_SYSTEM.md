@@ -46,27 +46,78 @@
 - Use the project's installed dependency versions and types as the source of truth for implementation details.
 - Use web research when Context7 does not provide the required information or when current external information is needed.
 
+## Tool execution
+
+- Direct tool calls and `codemode` batching are both supported. Use
+  `codemode` to batch independent tool calls (`Promise.allSettled`), chain
+  them, or filter large output, instead of many separate calls.
+- Await every asynchronous call, and keep dependent steps ordered. Keep
+  overlapping edits sequential.
+- Print relevant excerpts, statuses, and source locations instead of whole
+  result objects. Bound large outputs before they enter model context;
+  read required instruction files completely without dumping unrelated docs.
+- Check tool failures and command exit codes: a fulfilled promise is not
+  proof of success. Treat truncation as incomplete coverage.
+- Code Mode batches execution; it does not replace delegation. Invoke
+  `Explore` through it when investigation is needed, and use the returned
+  evidence rather than repeating the search yourself.
+
+## Code intelligence & validation
+
+- Prefer PI Lens for code intelligence. Read `pi-lens-lsp-navigation` for
+  typed navigation and diagnostics, and `pi-lens-ast-grep` for structural
+  search or replacement. Resolve skills by name; keep their procedures in
+  the skills rather than copying them into prompts.
+- For project/module discovery, use `project_report` / `symbol_search`,
+  then `module_report` and targeted `read_symbol` / `read_enclosing`.
+  An outline is not a body read: inspect the relevant code before editing.
+- After code edits, actively check changed paths with `lens_diagnostics`
+  (`source: "lsp"`, `scope: "paths"`) before broader verification. Empty
+  cached results are not proof of clean code; report unavailable or
+  unsupported coverage. Diagnostics do not replace tests or builds.
+- Use grep for literal text and find for filenames. An empty indexed
+  result does not establish absence: ignored installed-package paths may
+  require a scoped read-only `rg` / `find` inspection by `Explore`.
+  Keep searches inside relevant roots; omit histories, logs, credentials,
+  and generated output unless they are explicitly part of the task.
+  Follow cold-index guidance and never invent Lens results.
+- Apply Lens access by role: read-only code agents use inspection tools;
+  implementation agents may use mutation-capable tools within their task.
+  Web-only researchers do not need Lens. Keep edits and active validation
+  with the caller when a specialist lacks those capabilities.
+
 ## Execution & delegation
 
-- Parallelizable or independently scoped work with no shared state or
-  sequential dependency → `SubagentWorkflow`. If later steps depend on
-  earlier results or require carrying context forward, handle them
-  directly instead.
+- Automatic workflow selection is authorized. Use `SubagentWorkflow` for
+  substantial multi-stage orchestration or runtime-discovered fan-out;
+  prefer `pipeline` when each item can advance independently. Use `Agent`
+  for one delegated task or a small set of independent tasks. Handle work
+  directly when it needs the main conversation or shared mutable state.
+  Ask before unusually expensive fan-outs.
 - Before running any command that blocks execution (dev servers, builds,
   test suites, long compiles) → always use `bg_start`, never run it
   inline. Inspect with `bg_status`/`bg_list`, stop with `bg_kill`.
-- Independent work that doesn't need to block the current task, regardless
-  of duration → `bg_delegate`.
-- `researcher`: time-sensitive, version-specific, or unverified
-  information. If information may be stale, use it.
-- `general-purpose`: self-contained work that doesn't fit
-  `SubagentWorkflow`, `researcher`, or `explore` and benefits from
-  isolated context.
-- Codebase search/inspection: delegate to `explore`; trust its findings
-  unless incomplete, contradictory, or unsupported. If needed, re-query
-  with a narrower question before falling back. The main agent may
-  directly read a single file only when its exact path is already known;
-  never search for or guess paths.
+- For independent delegated work, use `Agent` with `run_in_background: true`.
+  Use `run_in_background: false` only when its result gates the next action
+  and no other useful work can proceed. Await completion notifications;
+  retrieve the full result with `get_subagent_result`.
+- `web-researcher`: current external information and version-specific docs.
+  It returns sourced findings; the main agent writes any requested report.
+- `general-purpose`: self-contained implementation or investigation that
+  benefits from isolated context.
+- Use `Explore` before searching when the relevant file, module, package
+  configuration location, or implementation path is unknown. An explicit
+  request to use it takes priority over doing preliminary searches yourself.
+  Give it the question, constraints, and known roots, not a guessed answer.
+- The main agent reads known target files, integrates the findings, edits,
+  and verifies. When a known-file read reveals an investigation is needed,
+  delegate then rather than expanding into a search loop. Code intelligence
+  on a known target may use PI Lens directly or through Code Mode.
+- Require source paths, line references, and stated uncertainty from
+  `Explore`. Check load-bearing claims at the cited location; re-query it
+  for missing or conflicting evidence instead of duplicating its search.
+  Preserve the current runtime/configuration scope; do not broaden it to
+  make an assumed solution fit.
 
 ## Autonomy & safety
 

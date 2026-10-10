@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "1.0.3",
+  "lastChangelogVersion": "1.1.0",
   "theme": "tokyo-night",
   "packages": [
     "npm:@wierdbytes/pi-tokyo-night",
@@ -30,10 +30,13 @@
       ]
     },
     "npm:pi-web-access",
-    "npm:@tintinweb/pi-subagents",
+    {
+      "source": "npm:@tintinweb/pi-subagents",
+      "extensions": []
+    },
     "npm:@juicesharp/rpiv-ask-user-question",
     "npm:pi-lens",
-    "npm:@pi-kaush/pi-inline-skill-identifier",
+    "npm:pi-dollar-skills",
     "npm:tgrep-pi",
     "npm:pi-prompt-improve",
     "npm:pi-free",
@@ -60,8 +63,8 @@
   "quietStartup": "header",
   "enableInstallTelemetry": false,
   "hideThinkingBlock": true,
-  "defaultProvider": "cline",
-  "defaultModel": "stealth/space-bunny-alpha",
+  "defaultProvider": "antigravity",
+  "defaultModel": "gemini-3.8-flash",
   "defaultTools": [
     "+codemode"
   ],

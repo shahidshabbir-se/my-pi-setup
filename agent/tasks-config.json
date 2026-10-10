@@ -1,4 +1,5 @@
 {
+  "autoClearCompleted": "never",
   "glyphs": {
     "completed": "",
     "pending": "",
