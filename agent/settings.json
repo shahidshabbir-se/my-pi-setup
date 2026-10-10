@@ -9,14 +9,13 @@
     {
       "source": "git:github.com/mattpocock/skills",
       "skills": [
-        "skills/engineering/*",
-        "skills/productivity/*"
+        "skills/engineering/**",
+        "skills/productivity/**"
       ]
     },
     {
       "source": "git:github.com/emilkowalski/skills",
       "skills": [
-        "skills/*",
         "!skills/prototype"
       ]
     },
@@ -26,7 +25,6 @@
     {
       "source": "git:github.com/backnotprop/pstack",
       "skills": [
-        "skills/*",
         "!skills/tdd",
         "!skills/teach"
       ]
