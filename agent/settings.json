@@ -4,21 +4,28 @@
   "packages": [
     "npm:@wierdbytes/pi-tokyo-night",
     "npm:pi-list-tools",
-    "npm:@ayulab/pi-rewind",
     {
       "source": "git:github.com/mattpocock/skills",
-      "skills": ["skills/engineering/**", "skills/productivity/**"]
+      "skills": [
+        "skills/engineering/**",
+        "skills/productivity/**"
+      ]
     },
     {
       "source": "git:github.com/emilkowalski/skills",
-      "skills": ["!skills/prototype"]
+      "skills": [
+        "!skills/prototype"
+      ]
     },
     {
       "source": "git:github.com/humanlayer/skills"
     },
     {
       "source": "git:github.com/backnotprop/pstack",
-      "skills": ["!skills/tdd", "!skills/teach"]
+      "skills": [
+        "!skills/tdd",
+        "!skills/teach"
+      ]
     },
     "npm:pi-web-access",
     {
@@ -26,6 +33,7 @@
       "extensions": []
     },
     "npm:@juicesharp/rpiv-ask-user-question",
+    "npm:@zhcsyncer/pi-context7",
     "npm:pi-lens",
     "npm:pi-dollar-skills",
     "npm:tgrep-pi",
@@ -35,8 +43,9 @@
     "npm:pi-context-view",
     "npm:pi-workspace-history",
     "npm:pi-tool-display",
-    "npm:pi-auto-reviewer",
-    "npm:@tintinweb/pi-tasks"
+    "npm:@narumitw/pi-caffeinate",
+    "npm:@tintinweb/pi-tasks",
+    "npm:pi-auto-reviewer"
   ],
   "skills": [
     "git/github.com/humanlayer/skills/plugins/show-me/skills",
@@ -52,10 +61,12 @@
   "collapseChangelog": true,
   "quietStartup": "header",
   "enableInstallTelemetry": false,
-  "hideThinkingBlock": true,
+  "hideThinkingBlock": false,
   "defaultProvider": "antigravity",
   "defaultModel": "gemini-3.8-flash",
-  "defaultTools": ["+codemode"],
+  "defaultTools": [
+    "+codemode"
+  ],
   "markdown": {
     "mermaid": "streaming"
   },
