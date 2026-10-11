@@ -21,7 +21,7 @@ import {
 	writeFileSync,
 } from "node:fs";
 import { dirname, isAbsolute, join, relative, resolve, sep } from "node:path";
-import { COLORS, ICONS, VERBS, fgRgb } from "./constants.js";
+import { COLORS, ICONS, VERBS, fgRgb, shimmer } from "./constants.js";
 
 export type LineConfig = {
 	left?: string[];
@@ -305,6 +305,7 @@ class CompactEditor extends CustomEditor {
 	private verb = "";
 	private rotateVerbs = false;
 	private spinnerIndex = 0;
+	private shimmerFrame = 0;
 	private timer: ReturnType<typeof setInterval> | undefined;
 
 	constructor(
@@ -364,6 +365,7 @@ class CompactEditor extends CustomEditor {
 		this.verb = next;
 		this.rotateVerbs = !fixed;
 		this.spinnerIndex = 0;
+		this.shimmerFrame = 0;
 		let verbTicks = 0;
 		this.stopTimer();
 		const frames = this.getSpinnerFrames();
@@ -375,6 +377,7 @@ class CompactEditor extends CustomEditor {
 		const ticksPerVerb = Math.max(1, Math.round(4000 / speed));
 		this.timer = setInterval(() => {
 			this.spinnerIndex = (this.spinnerIndex + 1) % frames.length;
+			this.shimmerFrame++;
 			verbTicks++;
 			if (this.rotateVerbs && verbTicks % ticksPerVerb === 0) {
 				let next = pickVerb();
@@ -405,7 +408,7 @@ class CompactEditor extends CustomEditor {
 
 		// Section 1: Top Left - status (verb + glyph when working)
 		const statusText = this.isWorking
-			? borderFn(`${glyph} ${this.verb}`)
+			? `${borderFn(`${glyph} `)}${shimmer(this.verb, this.shimmerFrame, borderFn, true)}`
 			: "";
 		borderParts.agent = statusText;
 		borderParts.status = statusText;

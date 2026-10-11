@@ -52,24 +52,41 @@ export function formatThinking(level?: string, theme?: Theme): string {
   return lower;
 }
 
-export const SHIMMER_BAND_WIDTH = 1; // ±1 from center = 3 chars wide
+const SHIMMER_BAND_WIDTH = 4;
+const SHIMMER_LIGHTENING = 0.35;
 
-export function shimmer(text: string, frame: number, base: RGB): string {
+export function shimmer(
+  text: string,
+  frame: number,
+  colorize: (text: string) => string,
+  reverse = false,
+): string {
   const chars = [...text];
-  const len = chars.length;
-  // Left-to-right sweep
-  const cycleLength = len + 20;
-  const glimmerIndex = (frame % cycleLength) - 10;
-  const shimmerStart = glimmerIndex - SHIMMER_BAND_WIDTH;
-  const shimmerEnd = glimmerIndex + SHIMMER_BAND_WIDTH;
-  const bright: RGB = [255, 255, 255];
+  const cycleLength = chars.length + SHIMMER_BAND_WIDTH * 2;
+  const rawPosition = frame % cycleLength;
+  const position = reverse ? cycleLength - 1 - rawPosition : rawPosition;
+  const colorMatch = colorize("x").match(/\x1b\[38;2;(\d+);(\d+);(\d+)m/);
+  const base: RGB | undefined = colorMatch
+    ? [Number(colorMatch[1]), Number(colorMatch[2]), Number(colorMatch[3])]
+    : undefined;
   let out = "";
-  for (let i = 0; i < len; i++) {
-    const inShimmer = i >= shimmerStart && i <= shimmerEnd;
-    const c = inShimmer ? bright : base;
-    out += `\x1b[38;2;${c[0]};${c[1]};${c[2]}m${chars[i]}`;
+  for (let i = 0; i < chars.length; i++) {
+    const intensity = Math.max(
+      0,
+      1 - Math.abs(i - position) / SHIMMER_BAND_WIDTH,
+    );
+    if (!base || intensity === 0) {
+      out += colorize(chars[i]);
+      continue;
+    }
+    const color: RGB = [
+      Math.round(base[0] + (255 - base[0]) * SHIMMER_LIGHTENING * intensity),
+      Math.round(base[1] + (255 - base[1]) * SHIMMER_LIGHTENING * intensity),
+      Math.round(base[2] + (255 - base[2]) * SHIMMER_LIGHTENING * intensity),
+    ];
+    out += `\x1b[38;2;${color[0]};${color[1]};${color[2]}m${chars[i]}${RESET}`;
   }
-  return out + RESET;
+  return out;
 }
 
 export const VERBS = [
