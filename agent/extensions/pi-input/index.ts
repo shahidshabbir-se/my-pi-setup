@@ -1,5 +1,4 @@
 import {
-	CustomEditor,
 	type ExtensionAPI,
 	type ExtensionContext,
 	type KeybindingsManager,
@@ -22,6 +21,7 @@ import {
 } from "node:fs";
 import { dirname, isAbsolute, join, relative, resolve, sep } from "node:path";
 import { COLORS, ICONS, VERBS, fgRgb, shimmer } from "./constants.js";
+import { PromptEditor } from "./prompt-editor.js";
 
 export type LineConfig = {
 	left?: string[];
@@ -300,7 +300,7 @@ function pickVerb(): string {
 	return `${VERBS[Math.floor(Math.random() * VERBS.length)]}…`;
 }
 
-class CompactEditor extends CustomEditor {
+class CompactEditor extends PromptEditor {
 	private isWorking = false;
 	private verb = "";
 	private rotateVerbs = false;
@@ -482,7 +482,7 @@ class CompactEditor extends CustomEditor {
 			bottomBorderIndex >= 0 && bottomBorderIndex < lines.length
 				? bottomBorderIndex
 				: lines.length - 1;
-		lines[borderIndex] = borderFn("─".repeat(Math.max(0, width)));
+		lines[borderIndex] = fitBorder(this.getInputHint(), "", width, borderFn);
 
 		return lines;
 	}
@@ -669,7 +669,7 @@ export default function (pi: ExtensionAPI) {
 		};
 	};
 
-	pi.on("session_start", (_event, ctx) => {
+	pi.on("session_start", (event, ctx) => {
 		if (!ctx.hasUI) return;
 
 		// Clean up previous editor if still running from earlier session
@@ -738,6 +738,18 @@ export default function (pi: ExtensionAPI) {
 				config,
 				() => borderParts(ctx, latestFooterData),
 			);
+			// Startup/resume rendering populates history in pi, but /reload
+			// replaces the editor without replaying that history into it.
+			if (event.reason === "reload") {
+				for (const entry of ctx.sessionManager.getBranch()) {
+					if (entry.type !== "message" || entry.message.role !== "user") continue;
+					const content = entry.message.content;
+					const text = typeof content === "string"
+						? content
+						: content.flatMap((part) => part.type === "text" ? [part.text] : []).join("");
+					editor.addToHistory(text);
+				}
+			}
 			return editor;
 		});
 
