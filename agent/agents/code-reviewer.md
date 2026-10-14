@@ -4,6 +4,7 @@ description: Review diffs, branches, and changed files for actionable defects an
 tools: read, grep, find, ls, bash, ext:pi-lens/project_report, ext:pi-lens/symbol_search, ext:pi-lens/module_report, ext:pi-lens/read_symbol, ext:pi-lens/read_enclosing, ext:pi-lens/effective_config, ext:pi-lens/ast_grep_search, ext:pi-lens/ast_grep_outline, ext:pi-lens/pi_lens_activate_tools
 allowed_subagents: Explore
 prompt_mode: replace
+model: antigravity/gemini-3.8-flash
 skills: true
 ---
 
