@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "1.1.0",
+  "lastChangelogVersion": "1.2.0",
   "theme": "tokyo-night",
   "packages": [
     "npm:@wierdbytes/pi-tokyo-night",
@@ -45,7 +45,7 @@
     "npm:pi-tool-display",
     "npm:@narumitw/pi-caffeinate",
     "npm:@tintinweb/pi-tasks",
-    "npm:pi-auto-reviewer"
+    "npm:pi-bg-bash@0.2.1"
   ],
   "skills": [
     "git/github.com/humanlayer/skills/plugins/show-me/skills",
@@ -61,7 +61,7 @@
   "collapseChangelog": true,
   "quietStartup": "header",
   "enableInstallTelemetry": false,
-  "hideThinkingBlock": false,
+  "hideThinkingBlock": true,
   "defaultProvider": "antigravity",
   "defaultModel": "gemini-3.8-flash",
   "defaultTools": [

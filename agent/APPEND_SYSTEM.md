@@ -2,6 +2,11 @@
 
 - OS: NixOS. Persistent config/packages go in `~/dotfiles/`.
 - Temporary tools: `nix-shell -p <package>`. Never install globally.
+- On NixOS, when a needed executable or Python module is missing, first identify the required Nix package(s) and invoke the command in a temporary `nix-shell` (for Python libraries, use `python3.withPackages`); avoid broad filesystem searches for binaries or site-packages. Keep the environment command reproducible in the final report.
+
+## Git actions
+
+- Treat commits as opt-in per task: commit only when the user's current prompt explicitly asks for a commit. Otherwise leave changes uncommitted and report their status. A request to implement, finish, or verify work is not commit authorization.
 
 ## Engineering principles
 
@@ -104,9 +109,18 @@
   for one delegated task or a small set of independent tasks. Handle work
   directly when it needs the main conversation or shared mutable state.
   Ask before unusually expensive fan-outs.
-- Before running any command that blocks execution (dev servers, builds,
-  test suites, long compiles) → always use `bg_start`, never run it
-  inline. Inspect with `bg_status`/`bg_list`, stop with `bg_kill`.
+- Run shell commands with `bash` in the foreground by default, including
+  quick builds, targeted tests, and checks. When unsure of duration, keep
+  the default: eligible commands still running after 120 seconds become
+  background tasks without restarting. Set `background: true` for
+  persistent servers/watchers or substantial work with useful concurrency.
+  Choose by expected duration and concurrency benefit, not command category.
+- Inspect background shell tasks with `bash_tasks` and `bash_output`; stop
+  them with `bash_kill`. Completion notifications arrive automatically:
+  continue independent work or end the turn instead of polling to wait.
+  Set `timeout` only for an intentional kill deadline; it disables automatic
+  promotion. Commands starting with `sleep` also stay foreground. For a
+  server readiness message, use `waitFor` on a foreground `bash` call.
 - For independent delegated work, use `Agent` with `run_in_background: true`.
   Use `run_in_background: false` only when its result gates the next action
   and no other useful work can proceed. Await completion notifications;
